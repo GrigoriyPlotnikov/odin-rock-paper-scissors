@@ -1,5 +1,3 @@
-console.log('Hello World!');
-
 function getComputerChoice() {
   const r = Math.random();
   if (r > 0.66) {
@@ -12,18 +10,18 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-  var q = false;
-  var res = '';
+  var validChoice = false;
+  var choice = '';
 
-  while (!q) {
+  while (!validChoice) {
 
-    var res = prompt('Rock-paper-scissors').toLowerCase();
+    choice = prompt('Rock-paper-scissors').toLowerCase();
 
-    switch (res) {
+    switch (choice) {
       case "rock":
       case "paper":
       case "scissors":
-        q = true;
+        validChoice = true;
         break;
       default:
         console.log('invalid choice');
@@ -31,40 +29,22 @@ function getHumanChoice() {
     }
   }
 
-  return res;
+  return choice;
 }
 
-function beats(choice1, choice2) {
-  if (choice1 == 'rock' && choice2 == 'paper') {
-    console.log('paper beats rock');
-    return 1;
-  }
-  if (choice1 == 'rock' && choice2 == 'scissors') {
-    console.log('rock beats scissors');
-    return -1;
-  }
-  if (choice1 == 'scissors' && choice2 == 'paper') {
-    console.log('scissors beats paper');
-    return -1;
-  }
-  if (choice1 == 'scissors' && choice2 == 'rock') {
-    console.log('rock beats scissors');
-    return 1;
-  }
-  if (choice1 == 'paper' && choice2 == 'scissors') {
-    console.log('scissors beats paper');
-    return 1;
-  }
-  if (choice1 == 'paper' && choice2 == 'rock') {
-    console.log('paper beats rock');
-    return -1;
-  }
-
-  console.log('draw');
-  return 0;
+function isWin(win, other) {
+  if (win == 'rock' && other == 'scissors')
+    return true;
+  if (win == 'scissors' && other == 'paper')
+    return true;
+  if (win == 'paper' && other == 'rock')
+    return true;
+  return false;
 }
 
-var humanScore = 0, computerScore = 0;
+function logWin(win, other) {
+  console.log(`${win} beats ${other}`);
+}
 
 function playRound() {
   const humanChoice = getHumanChoice();
@@ -72,26 +52,35 @@ function playRound() {
   const computerChoice = getComputerChoice();
   console.log(`computer choice ${computerChoice}`);
 
-  const res = beats(computerChoice, humanChoice);
-  if (res > 0)
-    humanScore += 1;
-  else if (res < 0)
-    computerScore += 1;
+  if (isWin(humanChoice, computerChoice)) {
+    logWin(humanChoice, computerChoice);
+    return 'human';
+  }
+  else if (isWin(computerChoice, humanChoice)) {
+    logWin(computerChoice, humanChoice);
+    return 'computer';
+  }
 
-  return res;
+  return '';
 }
 
 function playGame() {
-  var rounds = 5;
+  var rounds = 5,
+    humanScore = 0,
+    computerScore = 0;
 
   while (rounds > 0) {
-    const res = playRound();
-    if (res == 0)
+    const winner = playRound();
+    if (winner == 'computer') {
+      computerScore += 1;
+    } else if (winner == 'human') {
+      humanScore += 1;
+    } else {
       console.log('no round winner, try again');
-    else {
-      console.log(`Scores: computer ${computerScore}, human ${humanScore}`);
-      rounds--;
+      continue;
     }
+    rounds--;
+    console.log(`Scores: computer ${computerScore}, human ${humanScore}`);
   }
 
   const winner = computerScore > humanScore
