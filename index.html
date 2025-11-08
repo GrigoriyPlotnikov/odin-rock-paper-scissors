@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock-paper-scissors</title>
-    <script lang="js" src=".\game.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock-paper-scissors</title>
+  <script lang="js" src=".\game.js" defer></script>
 </head>
+
 <body>
-    <h1>Rock-paper-scissors</h1>
-    <div id='help'>
-        <p>Welcome to Rock-paper-scissors!</p>
-        <p>To play the game, open console with ctrl+shift+I and type playGame() in the console.</p>
-        <p>Then enter your choice of "rock", "paper", or "scissors" in the input box below and click "Play". The computer will randomly select its choice, and the winner will be determined based on the classic rules of the game.</p>
-        <p>Have fun and good luck!</p>
-    </div>
+  <h1>Rock-paper-scissors</h1>
+  <div class='help'>
+    <p>Welcome to Rock-paper-scissors!</p>
+    <p>When you enter your choice of "rock", "paper", or "scissors" by ckicking a button below the computer will
+      randomly select its choice, and the winner will be determined based on the classic rules of the game.</p>
+    <p>Have fun and good luck!</p>
+  </div>
+  <div class="buttons">
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+  </div>
+  <div class="result">
+    <p>Your choice: <span id="user-choice"></span> </p>
+    <p>Computer's choice: <span id="computer-choice"></span></p>
+    <p>Outcome: <span id="outcome"></span></p>
+  </div>
+  <div class="scoreboard">
+    <h2>Scoreboard</h2>
+    <p>Your Score: <span id="user-score"></span></p>
+    <p>Computer's Score: <span id="computer-score"></span></p>
+  </div>
+  <div class="reset">
+    <button id="reset-button">Reset Game</button>
+  </div>
+  <div class="log">
+    <h2>Game Log:</h2>
+    <ul id="gamelog"></ul>
+  </div>
+</body>
+
 </html>
