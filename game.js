@@ -1,25 +1,26 @@
-function getComputerChoice() {
-  const r = Math.random();
-  if (r > 0.66) {
-    return 'rock';
-  } else if (r >= 0.33) {
-    return 'paper';
-  } else {
-    return 'scissors';
-  }
-}
-
-function isWin(win, other) {
-  if (win == 'rock' && other == 'scissors')
-    return true;
-  if (win == 'scissors' && other == 'paper')
-    return true;
-  if (win == 'paper' && other == 'rock')
-    return true;
-  return false;
-}
-
 function initializeGame() {
+
+  function getComputerChoice() {
+    const r = Math.random();
+    if (r > 0.66) {
+      return 'rock';
+    } else if (r >= 0.33) {
+      return 'paper';
+    } else {
+      return 'scissors';
+    }
+  }
+
+  function isWin(win, other) {
+    if (win == 'rock' && other == 'scissors')
+      return true;
+    if (win == 'scissors' && other == 'paper')
+      return true;
+    if (win == 'paper' && other == 'rock')
+      return true;
+    return false;
+  }
+
   const logElement = document.getElementById('gamelog');
 
   function logMessage(message) {
@@ -52,28 +53,35 @@ function initializeGame() {
   const computerChoice = document.getElementById('computer-choice');
   const outcome = document.getElementById('outcome');
 
-  const buttons = document.querySelectorAll('.buttons button');
-
   const userScore = document.getElementById('user-score');
+  function scoreUserWin() {
+    outcome.textContent = 'You win!';
+    logMessage('You win this round!');
+    const userScoreValue = parseInt(userScore.textContent) || 0;
+    userScore.textContent = userScoreValue + 1;
+  }
+  
   const computerScore = document.getElementById('computer-score');
+  function scoreComputerWin() {
+    outcome.textContent = 'Computer wins!';
+    logMessage('Computer wins this round!');
+    const computerScoreValue = parseInt(computerScore.textContent) || 0;
+    computerScore.textContent = computerScoreValue + 1;
+  }
 
+  const buttons = document.querySelectorAll('.buttons button');
   buttons.forEach(element => {
-    element.addEventListener('click', () => {
-      userChoice.textContent = element.id;
+    element.addEventListener('click', (evt) => {
+      userChoice.textContent = evt.target.id;
       computerChoice.textContent = getComputerChoice();
       const winner = playRound(userChoice.textContent, computerChoice.textContent);
       if (winner == 'human') {
-        outcome.textContent = 'You win!';
-        logMessage('You win this round!');
-        const userScoreValue = parseInt(userScore.textContent) || 0;
-        userScore.textContent = userScoreValue + 1;
+        scoreUserWin();
       } else if (winner == 'computer') {
-        outcome.textContent = 'Computer wins!';
-        logMessage('Computer wins this round!');
-        const computerScoreValue = parseInt(computerScore.textContent) || 0;
-        computerScore.textContent = computerScoreValue + 1;
+        scoreComputerWin();
       } else {
         outcome.textContent = "It's a tie!";
+        logMessage("This round is a tie!");
       }
     });
   });
@@ -87,6 +95,6 @@ function initializeGame() {
     outcome.textContent = '';
     logElement.innerHTML = '';
   });
-}
+};
 
 initializeGame();
